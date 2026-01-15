@@ -1,35 +1,27 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import Todo from "./components/Todo";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App(){
+  const [page, setPage] = useState("");
+  return(
+    <div>
+      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+        <div className="container-fluid">
+          <a href="/" className="navbar-brand">Noted</a>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav">
+              <li className="nav-item"><a className="nav-link" style={{cursor: "pointer"}} onClick={() => setPage("todo")}>Todo</a></li>
+              <li className="nav-item"><a className="nav-link" style={{cursor: "pointer"}} onClick={() => setPage("notes")}>Notes</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      {page == "todo" && <Todo/>}
+      {page == "notes" && "notes here"}
+    </div>
+  );
 }
-
-export default App
