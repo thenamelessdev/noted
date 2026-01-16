@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 export default function Todo(){
     const [todos, setTodos] = useState<string[]>([]);
+    const [addThisTodo, setAddThisTodo] = useState("");
 
     async function updateTodos() {
         try{
@@ -37,6 +38,26 @@ export default function Todo(){
         }
     }
 
+    async function addTodo() {
+        if(addThisTodo == "") return;
+        try{
+            await fetch("/todos", {
+                method: "PUT",
+                headers:{
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    todo: addThisTodo
+                })
+            });
+            setAddThisTodo("");
+            updateTodos();
+        }
+        catch(err){
+            console.log(err);
+        }
+    }
+
     useEffect(() => {
         updateTodos();
         setInterval(() => {
@@ -46,6 +67,11 @@ export default function Todo(){
     return(
         <div>
            <ul>{todos}</ul> 
+           <br />
+           <input type="text" className="form-contorl w-50" onChange={(e) => setAddThisTodo(e.target.value)} value={addThisTodo} placeholder="Todo" />
+           <br />
+           <button className="btn btn-primary" onClick={addTodo}>Add todo</button>
+           
         </div>
     );
 }
