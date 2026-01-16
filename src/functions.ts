@@ -26,7 +26,7 @@ export function getDb(){
 
 export function writeDb(db:any){
     try{
-        writeFileSync(dbFile, db.toString());
+        writeFileSync(dbFile, JSON.stringify(db));
     }
     catch(err){
         console.log(err);

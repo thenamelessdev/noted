@@ -21,9 +21,10 @@ app.get("/", (req: Request, res: Response) => res.sendFile(index));
 app.get("/todos", (req: Request, res: Response) => {
     const db = getDb();
     if(!db) return res.sendStatus(500);
+    if(!db.todos) return res.sendStatus(404);
 
     res.json({
-        todos: db.todos ?? []
+        todos: db.todos
     });
 });
 
@@ -42,9 +43,11 @@ app.delete("/todos", (req: Request, res: Response) => {
     const {todo} = req.body;
     if(!todo) return res.sendStatus(400);
     const db = getDb();
-    if(!db) return res.sendStatus(500);
 
-    delete db.todos[todo];
+    if(!db) return res.sendStatus(500);
+    if(!db.todos) db.todos = []
+
+    db.todos = db.todos.filter((item:string) => item !== todo);
     writeDb(db);
     res.sendStatus(204);
 });

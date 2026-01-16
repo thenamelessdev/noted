@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 
 export default function Todo(){
-    const [todos, setTodos] = useState("");
+    const [todos, setTodos] = useState<string[]>([]);
 
     async function updateTodos() {
         try{
             const response = await fetch("/todos");
-            const json = await response.json();
             if(response.ok){
+                const json = await response.json();
                 setTodos(json.todos.map((todo:any, index:any) => (
                     <li key={index} onClick={() => deleteTodo(todo)} style={{cursor: "pointer"}}>{todo}</li>
                 )))
             }
+            else if(response.status == 404) setTodos([]);
         }
         catch(err){
             console.log(err);
