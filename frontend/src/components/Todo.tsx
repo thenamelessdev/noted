@@ -60,9 +60,6 @@ export default function Todo(){
 
     useEffect(() => {
         updateTodos();
-        setInterval(() => {
-            updateTodos()
-        }, 5000);
     }, []);
     return(
         <div>
