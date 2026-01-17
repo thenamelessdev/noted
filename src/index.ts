@@ -52,4 +52,53 @@ app.delete("/todos", (req: Request, res: Response) => {
     res.sendStatus(204);
 });
 
+
+app.get("/notes", (req: Request, res: Response) => {
+    const db = getDb();
+    if(!db) return res.sendStatus(500);
+    if(!db.notes) return res.sendStatus(404);
+
+    res.json({
+        notes: Object.keys(db.notes)
+    })
+});
+
+app.put("/notes", (req: Request, res: Response) => {
+    const {note} = req.body;
+    if(!note) return res.sendStatus(400);
+    const db = getDb();
+    if(!db) return res.sendStatus(500);
+    if(!db.notes) db.notes = {};
+    
+    db.notes[note] = "Edit me";
+    writeDb(db);
+    res.sendStatus(204);
+});
+
+app.get("/note", (req: Request, res: Response) => {
+    const {note} = req.query;
+    if(!note) return res.sendStatus(400);
+    const db = getDb();
+    if(!db) return res.sendStatus(500);
+
+    if(!db.notes[note.toString()]) return res.sendStatus(404);
+
+    res.json({
+        name: note,
+        note: db.notes[note.toString()]
+    });
+});
+
+app.patch("/note", (req: Request, res: Response) => {
+    const {note, text} = req.body;
+    if(!note || !text) return res.sendStatus(400);
+    const db = getDb();
+    if(!db) return res.sendStatus(500);
+    if(!db.notes[note]) return res.sendStatus(404);
+
+    db.notes[note] = text;
+    writeDb(db);
+    res.sendStatus(204);
+});
+
 app.listen(process.env.port || 8080);

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Todo from "./components/Todo";
+import Notes from "./components/Notes";
 
 export default function App(){
   const [page, setPage] = useState("");
@@ -21,7 +22,7 @@ export default function App(){
       </nav>
 
       {page == "todo" && <Todo/>}
-      {page == "notes" && "notes here"}
+      {page == "notes" && <Notes/>}
     </div>
   );
 }
