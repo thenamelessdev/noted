@@ -43,6 +43,24 @@ export default function Note({ note }: NoteInterface){
         }
     }
 
+    async function deleteNote() {
+        try{
+            await fetch("/note", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    note: note
+                })
+            });
+            window.location.reload();
+        }
+        catch(err){
+            console.log(err);
+        }
+    }
+
     useEffect(() => {
         getNote();
     }, [note]);
@@ -54,6 +72,7 @@ export default function Note({ note }: NoteInterface){
             <textarea className="form-control" rows={5} value={noteText} onChange={(e) => setNoteText(e.target.value)}></textarea>
             <br />
             <button className="btn btn-success" onClick={editNote}>Update</button>
+            <button onClick={deleteNote} className="btn btn-danger">Delete Note</button>
         </div>
     );
 }

@@ -101,4 +101,16 @@ app.patch("/note", (req: Request, res: Response) => {
     res.sendStatus(204);
 });
 
+app.delete("/note", (req: Request, res: Response) => {
+    const {note} = req.body;
+    if(!note) return res.sendStatus(400);
+    const db = getDb();
+    if(!db) return res.sendStatus(500);
+    if(!db.notes[note]) res.sendStatus(404);
+
+    delete db.notes[note];
+    writeDb(db);
+    res.sendStatus(204);
+});
+
 app.listen(process.env.port || 8080);
