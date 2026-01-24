@@ -16,7 +16,8 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "node dist/index.js",
-    "build": "npm run build --prefix frontend && npx tsc"
+    "build": "npm run build --prefix frontend && npx tsc",
+    "install": "npm install && npm install --prefix frontend"
   },
   "dependencies": {
     "@types/express": "^5.0.6",
