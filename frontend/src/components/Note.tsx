@@ -7,7 +7,6 @@ interface NoteInterface{
 export default function Note({ note }: NoteInterface){
 
     const [noteText, setNoteText] = useState("loading...");
-    const [autoSaveStat, setautoSaveStat] = useState("");
 
     async function getNote() {
         try{
@@ -74,7 +73,6 @@ export default function Note({ note }: NoteInterface){
             <br />
             <button className="btn btn-success" onClick={editNote}>Update</button>
             <button onClick={deleteNote} className="btn btn-danger">Delete Note</button>
-            <p>{autoSaveStat}</p>
         </div>
     );
 }
