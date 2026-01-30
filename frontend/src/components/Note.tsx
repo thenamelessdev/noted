@@ -64,11 +64,6 @@ export default function Note({ note }: NoteInterface){
 
     useEffect(() => {
         getNote();
-        setInterval(async () => {
-            setautoSaveStat("AutoSaving...");
-            await editNote()
-            setautoSaveStat("Autosaved!");
-        }, 10000);
     }, [note]);
 
     return(
