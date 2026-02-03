@@ -16,6 +16,7 @@ export default function App(){
             <ul className="navbar-nav">
               <li className="nav-item"><a className="nav-link" style={{cursor: "pointer"}} onClick={() => setPage("todo")}>Todo</a></li>
               <li className="nav-item"><a className="nav-link" style={{cursor: "pointer"}} onClick={() => setPage("notes")}>Notes</a></li>
+              <li className="nav-item"><a href="/logout" className="nav-link">Log out</a></li>
             </ul>
           </div>
         </div>
