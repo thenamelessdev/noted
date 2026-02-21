@@ -23,3 +23,20 @@ export async function POST(req: Request){
 
     return new NextResponse(null, {status: 204});
 }
+
+export async function DELETE(req: Request) {
+    const body = await req.json();
+    const {todo} = body;
+    if(!todo) return NextResponse.json({error: "missing todo"}, {status: 400});
+
+    const db = getDb();
+    if(!db) return NextResponse.json({error: "error while getting db"}, {status: 500});
+
+    const todos = db.todos || [];
+
+    db.todos = todos.filter((t: string) => t !== todo);
+
+    writeDb(db);
+
+    return new NextResponse(null, {status: 204});
+}
